@@ -50,8 +50,6 @@ class PasswordForm extends React.Component {
 
         this.state = {
             formError: false,
-            password: '',
-            twoFactorAuthCode: '',
         };
     }
 
@@ -66,7 +64,7 @@ class PasswordForm extends React.Component {
         if (!prevProps.isVisible && this.props.isVisible) {
             this.inputPassword.focus();
         }
-        if (prevProps.isVisible && !this.props.isVisible && this.state.password) {
+        if (prevProps.isVisible && !this.props.isVisible && this.props.password) {
             this.clearPassword();
         }
         if (!prevProps.account.requiresTwoFactorAuth && this.props.account.requiresTwoFactorAuth) {
@@ -78,7 +76,8 @@ class PasswordForm extends React.Component {
      * Clear Password from the state
      */
     clearPassword() {
-        this.setState({password: ''}, this.inputPassword.clear);
+        this.props.setPassword('');
+        this.inputPassword.clear();
     }
 
     /**
@@ -86,7 +85,8 @@ class PasswordForm extends React.Component {
      */
     resetPassword() {
         if (this.input2FA) {
-            this.setState({twoFactorAuthCode: ''}, this.input2FA.clear);
+            this.props.setTwoFactorAuthCode('');
+            this.input2FA.clear();
         }
         this.setState({formError: false});
         Session.resetPassword();
@@ -96,7 +96,8 @@ class PasswordForm extends React.Component {
     * Clears local and Onyx sign in states
     */
     clearSignInData() {
-        this.setState({twoFactorAuthCode: '', formError: false});
+        this.props.setTwoFactorAuthCode('');
+        this.setState({formError: false});
         Session.clearSignInData();
     }
 
@@ -104,22 +105,22 @@ class PasswordForm extends React.Component {
      * Check that all the form fields are valid, then trigger the submit callback
      */
     validateAndSubmitForm() {
-        if (!this.state.password.trim() && this.props.account.requiresTwoFactorAuth && !this.state.twoFactorAuthCode.trim()) {
+        if (!this.props.password.trim() && this.props.account.requiresTwoFactorAuth && !this.props.twoFactorAuthCode.trim()) {
             this.setState({formError: 'passwordForm.pleaseFillOutAllFields'});
             return;
         }
 
-        if (!this.state.password.trim()) {
+        if (!this.props.password.trim()) {
             this.setState({formError: 'passwordForm.pleaseFillPassword'});
             return;
         }
 
-        if (!ValidationUtils.isValidPassword(this.state.password)) {
+        if (!ValidationUtils.isValidPassword(this.props.password)) {
             this.setState({formError: 'passwordForm.error.incorrectLoginOrPassword'});
             return;
         }
 
-        if (this.props.account.requiresTwoFactorAuth && !this.state.twoFactorAuthCode.trim()) {
+        if (this.props.account.requiresTwoFactorAuth && !this.props.twoFactorAuthCode.trim()) {
             this.setState({formError: 'passwordForm.pleaseFillTwoFactorAuth'});
             return;
         }
@@ -128,7 +129,7 @@ class PasswordForm extends React.Component {
             formError: null,
         });
 
-        Session.signIn(this.state.password, this.state.twoFactorAuthCode);
+        Session.signIn(this.props.password, this.props.twoFactorAuthCode);
     }
 
     render() {
@@ -143,8 +144,8 @@ class PasswordForm extends React.Component {
                         textContentType="password"
                         nativeID="password"
                         name="password"
-                        value={this.state.password}
-                        onChangeText={text => this.setState({password: text})}
+                        value={this.props.password}
+                        onChangeText={this.props.setPassword}
                         onSubmitEditing={this.validateAndSubmitForm}
                         blurOnSubmit={false}
                     />
@@ -166,10 +167,10 @@ class PasswordForm extends React.Component {
                         <TextInput
                             ref={el => this.input2FA = el}
                             label={this.props.translate('passwordForm.twoFactorCode')}
-                            value={this.state.twoFactorAuthCode}
+                            value={this.props.twoFactorAuthCode}
                             placeholder={this.props.translate('passwordForm.requiredWhen2FAEnabled')}
                             placeholderTextColor={themeColors.placeholderText}
-                            onChangeText={text => this.setState({twoFactorAuthCode: text})}
+                            onChangeText={this.props.setTwoFactorAuthCode}
                             onSubmitEditing={this.validateAndSubmitForm}
                             keyboardType={CONST.KEYBOARD_TYPE.NUMBER_PAD}
                             blurOnSubmit={false}

@@ -42,6 +42,16 @@ const defaultProps = {
 };
 
 class SignInPage extends Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            login: '',
+            password: '',
+            twoFactorAuthCode: '',
+        };
+    }
+
     componentDidMount() {
         // Always reset the unread counter to zero on this page
         // NOTE: We need to wait for the next tick to ensure that the unread indicator is updated
@@ -81,8 +91,19 @@ class SignInPage extends Component {
                 >
                     {/* LoginForm and PasswordForm must use the isVisible prop. This keeps them mounted, but visually hidden
                     so that password managers can access the values. Conditionally rendering these components will break this feature. */}
-                    <LoginForm isVisible={showLoginForm} blurOnSubmit={shouldShowResendValidationLinkForm} />
-                    <PasswordForm isVisible={showPasswordForm} />
+                    <LoginForm
+                        isVisible={showLoginForm}
+                        blurOnSubmit={shouldShowResendValidationLinkForm}
+                        login={this.state.login}
+                        setLogin={login => this.setState({login})}
+                    />
+                    <PasswordForm
+                        isVisible={showPasswordForm}
+                        password={this.state.password}
+                        twoFactorAuthCode={this.state.twoFactorAuthCode}
+                        setPassword={password => this.setState({password})}
+                        setTwoFactorAuthCode={twoFactorAuthCode => this.setState({twoFactorAuthCode})}
+                    />
                     {shouldShowResendValidationLinkForm && <ResendValidationForm />}
                 </SignInPageLayout>
             </SafeAreaView>

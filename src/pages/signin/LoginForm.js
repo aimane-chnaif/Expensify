@@ -64,7 +64,6 @@ class LoginForm extends React.Component {
 
         this.state = {
             formError: false,
-            login: '',
         };
 
         if (this.props.account.errors || this.props.account.isLoading) {
@@ -88,7 +87,7 @@ class LoginForm extends React.Component {
         }
         this.input.focus();
 
-        if (this.state.login) {
+        if (this.props.login) {
             this.clearLogin();
         }
     }
@@ -99,8 +98,8 @@ class LoginForm extends React.Component {
      * @param {String} text
      */
     onTextInput(text) {
+        this.props.setLogin(text);
         this.setState({
-            login: text,
             formError: null,
         });
 
@@ -113,7 +112,8 @@ class LoginForm extends React.Component {
      * Clear Login from the state
      */
     clearLogin() {
-        this.setState({login: ''}, this.input.clear);
+        this.props.setLogin('');
+        this.input.clear();
     }
 
     /**
@@ -124,7 +124,7 @@ class LoginForm extends React.Component {
             return;
         }
 
-        const login = this.state.login.trim();
+        const login = this.props.login.trim();
         if (!login) {
             this.setState({formError: 'common.pleaseEnterEmailOrPhoneNumber'});
             return;
@@ -159,7 +159,7 @@ class LoginForm extends React.Component {
                     <TextInput
                         ref={el => this.input = el}
                         label={this.props.translate('loginForm.phoneOrEmail')}
-                        value={this.state.login}
+                        value={this.props.login}
                         autoCompleteType="username"
                         textContentType="username"
                         nativeID="username"
