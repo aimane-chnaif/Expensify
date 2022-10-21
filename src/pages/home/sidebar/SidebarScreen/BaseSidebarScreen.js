@@ -19,6 +19,7 @@ import Performance from '../../../../libs/Performance';
 import * as Welcome from '../../../../libs/actions/Welcome';
 import {sidebarPropTypes, sidebarDefaultProps} from './sidebarPropTypes';
 import withDrawerState from '../../../../components/withDrawerState';
+import withNavigationFocus from '../../../../components/withNavigationFocus';
 
 const propTypes = {
 
@@ -61,10 +62,20 @@ class BaseSidebarScreen extends Component {
         Welcome.show({routes, showCreateMenu: this.showCreateMenu});
     }
 
+    componentDidUpdate(prevProps) {
+        if (((this.props.isFocused || !prevProps.isFocused) && (this.props.isDrawerOpen || !prevProps.isDrawerOpen)) || !this.state.isCreateMenuActive) {
+            return;
+        }
+        this.hideCreateMenu();
+    }
+
     /**
      * Method called when we click the floating action button
      */
     showCreateMenu() {
+        if (!this.props.isFocused || (this.props.isSmallScreenWidth && !this.props.isDrawerOpen)) {
+            return;
+        }
         this.setState({
             isCreateMenuActive: true,
         });
@@ -75,6 +86,9 @@ class BaseSidebarScreen extends Component {
      * Method called when avatar is clicked
      */
     navigateToSettings() {
+        if (this.state.isCreateMenuActive) {
+            return;
+        }
         Navigation.navigate(ROUTES.SETTINGS);
     }
 
@@ -115,6 +129,7 @@ class BaseSidebarScreen extends Component {
                                 onAvatarClick={this.navigateToSettings}
                                 isSmallScreenWidth={this.props.isSmallScreenWidth}
                                 isDrawerOpen={this.props.isDrawerOpen}
+                                isMenuOpen={this.state.isCreateMenuActive}
                                 reportIDFromRoute={this.props.reportIDFromRoute}
                             />
                             <FAB
@@ -191,4 +206,4 @@ class BaseSidebarScreen extends Component {
 BaseSidebarScreen.propTypes = propTypes;
 BaseSidebarScreen.defaultProps = defaultProps;
 
-export default withDrawerState(BaseSidebarScreen);
+export default withDrawerState(withNavigationFocus(BaseSidebarScreen));

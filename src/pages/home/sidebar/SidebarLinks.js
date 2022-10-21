@@ -83,8 +83,11 @@ const defaultProps = {
 };
 
 class SidebarLinks extends React.Component {
-    showSearchPage() {
-        Navigation.navigate(ROUTES.SEARCH);
+    navigate(route) {
+        if (this.props.isMenuOpen) {
+            return;
+        }
+        Navigation.navigate(route);
     }
 
     render() {
@@ -121,7 +124,7 @@ class SidebarLinks extends React.Component {
                             accessibilityLabel={this.props.translate('sidebarScreen.buttonSearch')}
                             accessibilityRole="button"
                             style={[styles.flexRow, styles.ph5]}
-                            onPress={this.showSearchPage}
+                            onPress={() => this.navigate(ROUTES.SEARCH)}
                         >
                             <Icon src={Expensicons.MagnifyingGlass} />
                         </TouchableOpacity>
@@ -148,7 +151,7 @@ class SidebarLinks extends React.Component {
                             option => option.toString() === this.props.reportIDFromRoute
                         ))}
                         onSelectRow={(option) => {
-                            Navigation.navigate(ROUTES.getReportRoute(option.reportID));
+                            this.navigate(ROUTES.getReportRoute(option.reportID));
                             this.props.onLinkClick();
                         }}
                         shouldDisableFocusOptions={this.props.isSmallScreenWidth}
