@@ -19,6 +19,7 @@ export default {
         save: 'Guardar',
         saveChanges: 'Guardar cambios',
         password: 'Contraseña',
+        workspaces: 'Espacios de trabajo',
         profile: 'Perfil',
         payments: 'Pagos',
         preferences: 'Preferencias',
@@ -81,7 +82,7 @@ export default {
         error: {
             invalidAmount: 'Monto no válido',
             acceptedTerms: 'Debes aceptar los Términos de servicio para continuar',
-            phoneNumber: `Ingresa un teléfono válido, incluyendo el código de país (p. ej. ${CONST.EXAMPLE_PHONE_NUMBER}).`,
+            phoneNumber: `Ingresa un teléfono válido, incluyendo el código de país (p. ej. ${CONST.EXAMPLE_PHONE_NUMBER})`,
         },
         please: 'Por favor',
         contactUs: 'contáctenos',
@@ -260,6 +261,7 @@ export default {
         error: {
             invalidSplit: 'La suma de las partes no equivale al monto total',
             other: 'Error inesperado, por favor inténtalo más tarde',
+            genericCreateFailureMessage: 'Error inesperado solicitando dinero, por favor inténtalo más tarde',
         },
     },
     notificationPreferences: {
@@ -567,7 +569,6 @@ export default {
             addressStreet: 'Ingresa una calle de dirección válida que no sea un apartado postal',
             addressState: 'Por favor, selecciona un estado',
             incorporationDate: 'Ingresa una fecha válida',
-            incorporationDateFuture: 'La fecha de incorporación no puede ser futura',
             incorporationState: 'Ingresa un estado válido',
             industryCode: 'Ingresa un código de clasificación de industria válido',
             restrictedBusiness: 'Confirma que la empresa no está en la lista de negocios restringidos',
@@ -816,6 +817,10 @@ export default {
             growlMessageOnDeleteError: 'No se puede eliminar el espacio de trabajo porque tiene informes que están siendo procesados',
             unavailable: 'Espacio de trabajo no disponible',
         },
+        emptyWorkspace: {
+            title: 'Crear un nuevo espacio de trabajo',
+            subtitle: 'En los espacios de trabajo es donde puedes chatear con tu equipo, reembolsar gastos, emitir tarjetas, enviar y pagar facturas y mas — todo en un mismo lugar',
+        },
         new: {
             newWorkspace: 'Nuevo espacio de trabajo',
             getTheExpensifyCardAndMore: 'Consigue la Tarjeta Expensify y más',
@@ -957,8 +962,8 @@ export default {
         },
         error: {
             phoneNumberExtension: 'Por favor, introduzca una extensión telefónica válida',
-            firstName: 'Por favor ingresa tu nombre!',
-            lastName: 'Por favor ingresa tu apellido!',
+            firstName: 'Por favor ingresa tu nombre',
+            lastName: 'Por favor ingresa tu apellido',
             firstNameLength: 'El nombre no debe tener más de 50 caracteres',
             lastNameLength: 'El apellido no debe tener más de 50 caracteres',
         },
@@ -972,9 +977,10 @@ export default {
         skinTonePickerLabel: 'Elige el tono de piel por defecto',
         headers: {
             frequentlyUsed: 'Usado frecuentemente',
-            smileysAndPeople: 'Emoticonos y personas',
+            smileysAndEmotion: 'Emoticonos y emociones',
+            peopleAndBody: 'Personas y Cuerpo',
             animalsAndNature: 'Animales y naturaleza',
-            foodAndDrinks: 'Alimentos y bebidas',
+            foodAndDrink: 'Alimentos y bebidas',
             travelAndPlaces: 'Viajes y lugares',
             activities: 'Actividades',
             objects: 'Objetos',
