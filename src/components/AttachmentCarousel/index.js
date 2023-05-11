@@ -255,7 +255,8 @@ class AttachmentCarousel extends React.Component {
      * @returns {JSX.Element}
      */
     renderCell(props) {
-        const style = [props.style, styles.h100, {width: this.state.containerWidth}];
+        const modalStyles = styles.centeredModalStyles(this.props.isSmallScreenWidth);
+        const style = [props.style, styles.h100, {width: this.props.windowWidth - (modalStyles.marginHorizontal + modalStyles.borderWidth) * 2 + 1}];
 
         return (
             <View
