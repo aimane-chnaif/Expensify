@@ -341,7 +341,7 @@ function signIn(password, validateCode, twoFactorAuthCode, preferredLocale = CON
             value: {
                 ...CONST.DEFAULT_ACCOUNT_DATA,
                 isLoading: true,
-                loadingForm: CONST.FORMS.VALIDATE_CODE_FORM,
+                loadingForm: twoFactorAuthCode? CONST.FORMS.VALIDATE_TFA_CODE_FORM : CONST.FORMS.VALIDATE_CODE_FORM,
             },
         },
     ];
@@ -404,7 +404,7 @@ function signInWithValidateCode(accountID, code, twoFactorAuthCode) {
             value: {
                 ...CONST.DEFAULT_ACCOUNT_DATA,
                 isLoading: true,
-                loadingForm: CONST.FORMS.VALIDATE_CODE_FORM,
+                loadingForm: twoFactorAuthCode ? CONST.FORMS.VALIDATE_TFA_CODE_FORM : CONST.FORMS.VALIDATE_CODE_FORM,
             },
         },
         {
