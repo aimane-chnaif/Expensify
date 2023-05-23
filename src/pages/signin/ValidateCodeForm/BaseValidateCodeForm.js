@@ -248,7 +248,7 @@ class BaseValidateCodeForm extends React.Component {
                         success
                         style={[styles.mv3]}
                         text={this.props.translate('common.signIn')}
-                        isLoading={this.props.account.isLoading}
+                        isLoading={this.props.account.isLoading && this.props.account.loadingForm === CONST.FORMS.VALIDATE_CODE_FORM}
                         onPress={this.validateAndSubmitForm}
                     />
                     <ChangeExpensifyLoginLink onPress={this.clearSignInData} />

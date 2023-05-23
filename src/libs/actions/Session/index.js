@@ -98,6 +98,7 @@ function resendValidationLink(login = credentials.login) {
                 isLoading: true,
                 errors: null,
                 message: null,
+                loadingForm: CONST.FORMS.RESEND_VALIDATION_FORM,
             },
         },
     ];
@@ -108,6 +109,7 @@ function resendValidationLink(login = credentials.login) {
             value: {
                 isLoading: false,
                 message: 'resendValidationForm.linkHasBeenResent',
+                loadingForm: null,
             },
         },
     ];
@@ -118,6 +120,7 @@ function resendValidationLink(login = credentials.login) {
             value: {
                 isLoading: false,
                 message: null,
+                loadingForm: null,
             },
         },
     ];
@@ -218,6 +221,7 @@ function beginSignIn(login) {
                 ...CONST.DEFAULT_ACCOUNT_DATA,
                 isLoading: true,
                 message: null,
+                loadingForm: CONST.FORMS.LOGIN_FORM,
             },
         },
     ];
@@ -228,6 +232,7 @@ function beginSignIn(login) {
             key: ONYXKEYS.ACCOUNT,
             value: {
                 isLoading: false,
+                loadingForm: null,
             },
         },
         {
@@ -248,6 +253,7 @@ function beginSignIn(login) {
                 errors: {
                     [DateUtils.getMicroseconds()]: Localize.translateLocal('loginForm.cannotGetAccountDetails'),
                 },
+                loadingForm: null,
             },
         },
     ];
@@ -335,6 +341,7 @@ function signIn(password, validateCode, twoFactorAuthCode, preferredLocale = CON
             value: {
                 ...CONST.DEFAULT_ACCOUNT_DATA,
                 isLoading: true,
+                loadingForm: CONST.FORMS.VALIDATE_CODE_FORM,
             },
         },
     ];
@@ -345,6 +352,7 @@ function signIn(password, validateCode, twoFactorAuthCode, preferredLocale = CON
             key: ONYXKEYS.ACCOUNT,
             value: {
                 isLoading: false,
+                loadingForm: null,
             },
         },
         {
@@ -362,6 +370,7 @@ function signIn(password, validateCode, twoFactorAuthCode, preferredLocale = CON
             key: ONYXKEYS.ACCOUNT,
             value: {
                 isLoading: false,
+                loadingForm: null,
             },
         },
     ];
@@ -395,6 +404,7 @@ function signInWithValidateCode(accountID, code, twoFactorAuthCode) {
             value: {
                 ...CONST.DEFAULT_ACCOUNT_DATA,
                 isLoading: true,
+                loadingForm: CONST.FORMS.VALIDATE_CODE_FORM,
             },
         },
         {
@@ -409,6 +419,7 @@ function signInWithValidateCode(accountID, code, twoFactorAuthCode) {
             onyxMethod: Onyx.METHOD.MERGE,
             key: ONYXKEYS.ACCOUNT,
             value: {isLoading: false},
+            loadingForm: null,
         },
         {
             onyxMethod: Onyx.METHOD.MERGE,
@@ -430,6 +441,7 @@ function signInWithValidateCode(accountID, code, twoFactorAuthCode) {
             onyxMethod: Onyx.METHOD.MERGE,
             key: ONYXKEYS.ACCOUNT,
             value: {isLoading: false},
+            loadingForm: null,
         },
         {
             onyxMethod: Onyx.METHOD.MERGE,
@@ -512,6 +524,7 @@ function resendResetPassword() {
                         forgotPassword: true,
                         message: null,
                         errors: null,
+                        loadingForm: CONST.FORMS.RESEND_VALIDATION_FORM,
                     },
                 },
             ],
@@ -522,6 +535,7 @@ function resendResetPassword() {
                     value: {
                         isLoading: false,
                         message: 'resendValidationForm.linkHasBeenResent',
+                        loadingForm: null,
                     },
                 },
             ],
@@ -531,6 +545,7 @@ function resendResetPassword() {
                     key: ONYXKEYS.ACCOUNT,
                     value: {
                         isLoading: false,
+                        loadingForm: null,
                     },
                 },
             ],
@@ -708,6 +723,7 @@ function requestUnlinkValidationLink() {
                 isLoading: true,
                 errors: null,
                 message: null,
+                loadingForm: CONST.FORMS.UNLINK_LOGIN_FORM,
             },
         },
     ];
@@ -718,6 +734,7 @@ function requestUnlinkValidationLink() {
             value: {
                 isLoading: false,
                 message: Localize.translateLocal('unlinkLoginForm.linkSent'),
+                loadingForm: null,
             },
         },
     ];
@@ -727,6 +744,7 @@ function requestUnlinkValidationLink() {
             key: ONYXKEYS.ACCOUNT,
             value: {
                 isLoading: false,
+                loadingForm: null,
             },
         },
     ];
