@@ -27,7 +27,6 @@ import * as OptionsListUtils from '../../libs/OptionsListUtils';
 import * as CurrencyUtils from '../../libs/CurrencyUtils';
 import * as IOUUtils from '../../libs/IOUUtils';
 import * as ReportUtils from '../../libs/ReportUtils';
-import refPropTypes from '../refPropTypes';
 
 const propTypes = {
     /** The active IOUReport, used for Onyx subscription */
@@ -44,7 +43,7 @@ const propTypes = {
     action: PropTypes.shape(reportActionPropTypes),
 
     /** Popover context menu anchor, used for showing context menu */
-    contextMenuAnchor: refPropTypes,
+    contextMenuAnchor: PropTypes.shape({current: PropTypes.elementType}),
 
     /** Callback for updating context menu active state, used for showing context menu */
     checkIfContextMenuActive: PropTypes.func,

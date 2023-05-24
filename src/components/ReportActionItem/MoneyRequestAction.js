@@ -20,7 +20,6 @@ import * as ReportUtils from '../../libs/ReportUtils';
 import * as Report from '../../libs/actions/Report';
 import withLocalize, {withLocalizePropTypes} from '../withLocalize';
 import * as ReportActionsUtils from '../../libs/ReportActionsUtils';
-import refPropTypes from '../refPropTypes';
 
 const propTypes = {
     /** All the data of the action */
@@ -36,7 +35,7 @@ const propTypes = {
     isMostRecentIOUReportAction: PropTypes.bool.isRequired,
 
     /** Popover context menu anchor, used for showing context menu */
-    contextMenuAnchor: refPropTypes,
+    contextMenuAnchor: PropTypes.shape({current: PropTypes.elementType}),
 
     /** Callback for updating context menu active state, used for showing context menu */
     checkIfContextMenuActive: PropTypes.func,

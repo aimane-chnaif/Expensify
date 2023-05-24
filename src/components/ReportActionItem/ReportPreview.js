@@ -24,7 +24,6 @@ import SettlementButton from '../SettlementButton';
 import themeColors from '../../styles/themes/default';
 import getButtonState from '../../libs/getButtonState';
 import * as IOU from '../../libs/actions/IOU';
-import refPropTypes from '../refPropTypes';
 
 const propTypes = {
     /** All the data of the action */
@@ -72,7 +71,7 @@ const propTypes = {
     }),
 
     /** Popover context menu anchor, used for showing context menu */
-    contextMenuAnchor: refPropTypes,
+    contextMenuAnchor: PropTypes.shape({current: PropTypes.elementType}),
 
     /** Callback for updating context menu active state, used for showing context menu */
     checkIfContextMenuActive: PropTypes.func,

@@ -1,5 +1,4 @@
 import PropTypes from 'prop-types';
-import refPropTypes from '../refPropTypes';
 import stylePropTypes from '../../styles/stylePropTypes';
 
 const propTypes = {
@@ -19,7 +18,7 @@ const propTypes = {
     children: PropTypes.oneOfType([PropTypes.func, PropTypes.node]).isRequired,
 
     /** The ref to the search input (may be null on small screen widths) */
-    forwardedRef: refPropTypes,
+    forwardedRef: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
 
     /** Prevent the default ContextMenu on web/Desktop */
     preventDefaultContextMenu: PropTypes.bool,
