@@ -45,6 +45,9 @@ const propTypes = {
         horizontal: PropTypes.oneOf(_.values(CONST.MODAL.ANCHOR_ORIGIN_HORIZONTAL)),
         vertical: PropTypes.oneOf(_.values(CONST.MODAL.ANCHOR_ORIGIN_VERTICAL)),
     }),
+
+    // Ref for thebutton
+    buttonRef: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
 };
 
 const defaultProps = {
@@ -56,6 +59,7 @@ const defaultProps = {
         horizontal: CONST.MODAL.ANCHOR_ORIGIN_HORIZONTAL.RIGHT,
         vertical: CONST.MODAL.ANCHOR_ORIGIN_VERTICAL.TOP, // we assume that popover menu opens below the button, anchor is at TOP
     },
+    buttonRef: () => {},
 };
 
 function ButtonWithDropdownMenu(props) {
@@ -89,6 +93,7 @@ function ButtonWithDropdownMenu(props) {
             {props.options.length > 1 ? (
                 <View style={[styles.flexRow, styles.justifyContentBetween, styles.alignItemsCenter, ...props.style]}>
                     <Button
+                        ref={props.buttonRef}
                         success
                         onPress={(event) => props.onPress(event, selectedItem.value)}
                         text={selectedItem.text}
@@ -104,7 +109,7 @@ function ButtonWithDropdownMenu(props) {
                         success
                         isDisabled={props.isDisabled}
                         style={[styles.pl0]}
-                        onPress={() => setIsMenuVisible(true)}
+                        onPress={() => setIsMenuVisible(!isMenuVisible)}
                         shouldRemoveLeftBorderRadius
                     >
                         <Icon

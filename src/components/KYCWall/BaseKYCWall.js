@@ -23,6 +23,7 @@ class KYCWall extends React.Component {
 
         this.continue = this.continue.bind(this);
         this.setMenuPosition = this.setMenuPosition.bind(this);
+        this.anchorRef = React.createRef(null);
 
         this.state = {
             shouldShowAddPaymentMenu: false,
@@ -95,6 +96,11 @@ class KYCWall extends React.Component {
      * @param {String} iouPaymentType
      */
     continue(event, iouPaymentType) {
+        if (this.state.shouldShowAddPaymentMenu) {
+            this.setState({shouldShowAddPaymentMenu: false});
+            return;
+        }
+
         this.setState({transferBalanceButton: event.nativeEvent.target});
         const isExpenseReport = ReportUtils.isExpenseReport(this.props.iouReport);
         const paymentCardList = this.props.fundList || {};
@@ -138,6 +144,7 @@ class KYCWall extends React.Component {
                         vertical: this.state.anchorPositionVertical,
                         horizontal: this.state.anchorPositionHorizontal,
                     }}
+                    anchorRef={this.anchorRef}
                     shouldShowPaypal={false}
                     onItemSelected={(item) => {
                         this.setState({shouldShowAddPaymentMenu: false});
@@ -148,7 +155,7 @@ class KYCWall extends React.Component {
                         }
                     }}
                 />
-                {this.props.children(this.continue)}
+                {this.props.children(this.continue, this.anchorRef)}
             </>
         );
     }
