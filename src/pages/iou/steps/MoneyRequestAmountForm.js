@@ -106,7 +106,7 @@ function MoneyRequestAmountForm({amount, currency, isEditing, forwardedRef, onCu
     };
 
     useEffect(() => {
-        if (!currency || !_.isNumber(amount)) {
+        if (!currency || !amount) {
             return;
         }
         const amountAsStringForState = CurrencyUtils.convertToFrontendAmount(amount).toString();
