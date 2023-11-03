@@ -44,14 +44,6 @@ module.exports = (env = {}) =>
                 ...proxySettings,
                 historyApiFallback: true,
                 port,
-                host: 'dev.new.expensify.com',
-                server: {
-                    type: 'https',
-                    options: {
-                        key: path.join(__dirname, 'key.pem'),
-                        cert: path.join(__dirname, 'certificate.pem'),
-                    },
-                },
             },
             plugins: [
                 new DefinePlugin({

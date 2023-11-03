@@ -111,6 +111,3 @@ tsconfig.tsbuildinfo
 # Yalc
 .yalc
 yalc.lock
-
-# Local https certificate/key
-config/webpack/*.pem
