@@ -195,15 +195,7 @@ function getEffectiveDisplayName(personalDetail?: PersonalDetails): string | und
     return undefined;
 }
 
-/**
- * Whether personal details is empty
- */
-function isPersonalDetailsEmpty() {
-    return !personalDetails.length;
-}
-
 export {
-    isPersonalDetailsEmpty,
     getDisplayNameOrDefault,
     getPersonalDetailsByIDs,
     getAccountIDsByLogins,

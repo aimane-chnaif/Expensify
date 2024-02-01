@@ -1,4 +1,5 @@
 import PropTypes from 'prop-types';
+import reportActionPropTypes from '@pages/home/report/reportActionPropTypes';
 import CONST from '@src/CONST';
 
 const propTypes = {
@@ -17,8 +18,19 @@ const propTypes = {
     /** Whether the keyboard is open or not */
     isKeyboardShown: PropTypes.bool.isRequired,
 
+    /** The actions from the parent report */
+    parentReportActions: PropTypes.objectOf(PropTypes.shape(reportActionPropTypes)),
+
+    /** Array of report actions for this report */
+    reportActions: PropTypes.arrayOf(PropTypes.shape(reportActionPropTypes)),
+
     /** The ID of the report */
     reportID: PropTypes.string.isRequired,
+
+    /** The report currently being looked at */
+    report: PropTypes.shape({
+        parentReportID: PropTypes.string,
+    }).isRequired,
 
     /** Callback when the input is focused */
     onFocus: PropTypes.func.isRequired,
@@ -48,7 +60,7 @@ const propTypes = {
     isBlockedFromConcierge: PropTypes.bool.isRequired,
 
     /** Whether the input is disabled or not */
-    disabled: PropTypes.bool,
+    disabled: PropTypes.bool.isRequired,
 
     /** Whether the full composer is available or not */
     isFullComposerAvailable: PropTypes.bool.isRequired,
@@ -109,7 +121,6 @@ const defaultProps = {
     reportActions: [],
     forwardedRef: null,
     measureParentContainer: () => {},
-    disabled: false,
 };
 
 export {propTypes, defaultProps};
