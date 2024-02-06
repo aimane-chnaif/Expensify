@@ -59,6 +59,11 @@ type OfflineWithFeedbackProps = ChildrenProps & {
 
 type StrikethroughProps = Partial<ChildrenProps> & {style: Array<ViewStyle | TextStyle | ImageStyle>};
 
+function omitBy<T>(obj: Record<string, T> | undefined | null, predicate: (value: T) => boolean) {
+    // eslint-disable-next-line @typescript-eslint/naming-convention, @typescript-eslint/no-unused-vars
+    return Object.fromEntries(Object.entries(obj ?? {}).filter(([_, value]) => !predicate(value)));
+}
+
 function OfflineWithFeedback({
     pendingAction,
     canDismissError = true,
@@ -79,12 +84,8 @@ function OfflineWithFeedback({
     const {isOffline} = useNetwork();
 
     const hasErrors = !isEmptyObject(errors ?? {});
-
     // Some errors have a null message. This is used to apply opacity only and to avoid showing redundant messages.
-    const errorEntries = Object.entries(errors ?? {});
-    const filteredErrorEntries = errorEntries.filter((errorEntry): errorEntry is [string, string | ReceiptError] => errorEntry[1] !== null);
-    const errorMessages = Object.fromEntries(filteredErrorEntries);
-
+    const errorMessages = omitBy(errors, (e: string | ReceiptError) => e === null);
     const hasErrorMessages = !isEmptyObject(errorMessages);
     const isOfflinePendingAction = !!isOffline && !!pendingAction;
     const isUpdateOrDeleteError = hasErrors && (pendingAction === CONST.RED_BRICK_ROAD_PENDING_ACTION.DELETE || pendingAction === CONST.RED_BRICK_ROAD_PENDING_ACTION.UPDATE);

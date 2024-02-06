@@ -75,7 +75,7 @@ function isValidPastDate(date: string | Date): boolean {
 /**
  * Used to validate a value that is "required".
  */
-function isRequiredFulfilled(value: string | Date | unknown[] | Record<string, unknown> | null): boolean {
+function isRequiredFulfilled(value: string | Date | unknown[] | Record<string, unknown>): boolean {
     if (typeof value === 'string') {
         return !StringUtils.isEmptyString(value);
     }
