@@ -5,7 +5,7 @@ import {Keyboard, ScrollView} from 'react-native';
 import type {OnyxEntry} from 'react-native-onyx';
 import {withOnyx} from 'react-native-onyx';
 import FormAlertWithSubmitButton from '@components/FormAlertWithSubmitButton';
-import FormElement from '@components/FormElement';
+import FormSubmit from '@components/FormSubmit';
 import SafeAreaConsumer from '@components/SafeAreaConsumer';
 import type {SafeAreaChildrenProps} from '@components/SafeAreaConsumer/types';
 import ScrollViewWithContext from '@components/ScrollViewWithContext';
@@ -94,10 +94,11 @@ function FormWrapper({
 
     const scrollViewContent = useCallback(
         (safeAreaPaddingBottomStyle: SafeAreaChildrenProps['safeAreaPaddingBottomStyle']) => (
-            <FormElement
+            <FormSubmit
                 key={formID}
                 ref={formContentRef}
                 style={[style, safeAreaPaddingBottomStyle]}
+                onSubmit={onSubmit}
             >
                 {children}
                 {isSubmitButtonVisible && (
@@ -115,7 +116,7 @@ function FormWrapper({
                         disablePressOnEnter={disablePressOnEnter}
                     />
                 )}
-            </FormElement>
+            </FormSubmit>
         ),
         [
             children,
