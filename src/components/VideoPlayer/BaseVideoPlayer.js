@@ -9,6 +9,7 @@ import PressableWithoutFeedback from '@components/Pressable/PressableWithoutFeed
 import {usePlaybackContext} from '@components/VideoPlayerContexts/PlaybackContext';
 import VideoPopoverMenu from '@components/VideoPopoverMenu';
 import useThemeStyles from '@hooks/useThemeStyles';
+import useWindowDimensions from '@hooks/useWindowDimensions';
 import addEncryptedAuthTokenToURL from '@libs/addEncryptedAuthTokenToURL';
 import * as Browser from '@libs/Browser';
 import * as DeviceCapabilities from '@libs/DeviceCapabilities';
@@ -42,6 +43,7 @@ function BaseVideoPlayer({
     isVideoHovered,
 }) {
     const styles = useThemeStyles();
+    const {isSmallScreenWidth} = useWindowDimensions();
     const {pauseVideo, playVideo, currentlyPlayingURL, updateSharedElements, sharedElement, originalParent, shareVideoPlayerElements, currentVideoPlayerRef, updateCurrentlyPlayingURL} =
         usePlaybackContext();
     const [duration, setDuration] = useState(videoDuration * 1000);
@@ -97,24 +99,20 @@ function BaseVideoPlayer({
 
     const handlePlaybackStatusUpdate = useCallback(
         (e) => {
-            const isVideoPlaying = e.isPlaying || false;
-            const currentDuration = e.durationMillis || videoDuration * 1000;
-            const currentPositon = e.positionMillis || 0;
-
-            if (shouldReplayVideo(e, isVideoPlaying, currentDuration, currentPositon)) {
+            if (shouldReplayVideo(e, isPlaying, duration, position)) {
                 videoPlayerRef.current.setStatusAsync({positionMillis: 0, shouldPlay: true});
             }
-
+            const isVideoPlaying = e.isPlaying || false;
             preventPausingWhenExitingFullscreen(isVideoPlaying);
             setIsPlaying(isVideoPlaying);
             setIsLoading(!e.isLoaded || Number.isNaN(e.durationMillis)); // when video is ready to display duration is not NaN
             setIsBuffering(e.isBuffering || false);
-            setDuration(currentDuration);
-            setPosition(currentPositon);
+            setDuration(e.durationMillis || videoDuration * 1000);
+            setPosition(e.positionMillis || 0);
 
             onPlaybackStatusUpdate(e);
         },
-        [onPlaybackStatusUpdate, preventPausingWhenExitingFullscreen, videoDuration],
+        [onPlaybackStatusUpdate, preventPausingWhenExitingFullscreen, videoDuration, isPlaying, duration, position],
     );
 
     const handleFullscreenUpdate = useCallback(
@@ -174,7 +172,7 @@ function BaseVideoPlayer({
             }
             originalParent.appendChild(sharedElement);
         };
-    }, [bindFunctions, currentVideoPlayerRef, currentlyPlayingURL, originalParent, sharedElement, shouldUseSharedVideoElement, url]);
+    }, [bindFunctions, currentVideoPlayerRef, currentlyPlayingURL, isSmallScreenWidth, originalParent, sharedElement, shouldUseSharedVideoElement, url]);
 
     return (
         <>
@@ -187,36 +185,36 @@ function BaseVideoPlayer({
                 <Hoverable>
                     {(isHovered) => (
                         <View style={[styles.w100, styles.h100]}>
-                            <PressableWithoutFeedback
-                                accessibilityRole="button"
-                                onPress={() => {
-                                    togglePlayCurrentVideo();
-                                }}
-                                style={styles.flex1}
-                            >
-                                {shouldUseSharedVideoElement ? (
-                                    <>
-                                        <View
-                                            ref={sharedVideoPlayerParentRef}
-                                            style={[styles.flex1]}
-                                        />
-                                        {/* We are adding transparent absolute View between appended video component and control buttons to enable
+                            {shouldUseSharedVideoElement ? (
+                                <>
+                                    <View
+                                        ref={sharedVideoPlayerParentRef}
+                                        style={[styles.flex1]}
+                                    />
+                                    {/* We are adding transparent absolute View between appended video component and control buttons to enable
                                     catching onMouse events from Attachment Carousel. Due to late appending React doesn't handle
                                     element's events properly. */}
-                                        <View style={[styles.w100, styles.h100, styles.pAbsolute]} />
-                                    </>
-                                ) : (
-                                    <View
-                                        style={styles.flex1}
-                                        ref={(el) => {
-                                            if (!el) {
-                                                return;
-                                            }
-                                            videoPlayerElementParentRef.current = el;
-                                            if (el.childNodes && el.childNodes[0]) {
-                                                videoPlayerElementRef.current = el.childNodes[0];
-                                            }
+                                    <View style={[styles.w100, styles.h100, styles.pAbsolute]} />
+                                </>
+                            ) : (
+                                <View
+                                    style={styles.flex1}
+                                    ref={(el) => {
+                                        if (!el) {
+                                            return;
+                                        }
+                                        videoPlayerElementParentRef.current = el;
+                                        if (el.childNodes && el.childNodes[0]) {
+                                            videoPlayerElementRef.current = el.childNodes[0];
+                                        }
+                                    }}
+                                >
+                                    <PressableWithoutFeedback
+                                        accessibilityRole="button"
+                                        onPress={() => {
+                                            togglePlayCurrentVideo();
                                         }}
+                                        style={styles.flex1}
                                     >
                                         <Video
                                             ref={videoPlayerRef}
@@ -233,9 +231,9 @@ function BaseVideoPlayer({
                                             onPlaybackStatusUpdate={handlePlaybackStatusUpdate}
                                             onFullscreenUpdate={handleFullscreenUpdate}
                                         />
-                                    </View>
-                                )}
-                            </PressableWithoutFeedback>
+                                    </PressableWithoutFeedback>
+                                </View>
+                            )}
 
                             {(isLoading || isBuffering) && <FullScreenLoadingIndicator style={[styles.opacity1, styles.bgTransparent]} />}
 
