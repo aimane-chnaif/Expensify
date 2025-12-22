@@ -11,7 +11,7 @@ import * as Expensicons from '@components/Icon/Expensicons';
 import PinButton from '@components/PinButton';
 import PressableWithoutFeedback from '@components/Pressable/PressableWithoutFeedback';
 import SearchButton from '@components/Search/SearchRouter/SearchButton';
-import SidePanelButton from '@components/SidePanel/SidePanelButton';
+import HelpButton from '@components/SidePanel/HelpComponents/HelpButton';
 import ThreeDotsMenu from '@components/ThreeDotsMenu';
 import Tooltip from '@components/Tooltip';
 import {useMemoizedLazyExpensifyIcons} from '@hooks/useLazyAsset';
@@ -304,7 +304,7 @@ function HeaderWithBackButton({
                         </Tooltip>
                     )}
                 </View>
-                {shouldDisplayHelpButton && <SidePanelButton />}
+                {shouldDisplayHelpButton && <HelpButton />}
                 {shouldDisplaySearchRouter && <SearchButton />}
             </View>
         </View>

@@ -1,7 +1,7 @@
 import type {StyleProp, ViewStyle} from 'react-native';
 
-type SidePanelButtonProps = {
+type HelpButtonProps = {
     style?: StyleProp<ViewStyle>;
 };
 
-export default SidePanelButtonProps;
+export default HelpButtonProps;

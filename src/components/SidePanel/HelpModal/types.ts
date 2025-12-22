@@ -1,13 +1,12 @@
-import type {ReactNode, RefObject} from 'react';
+import type {MutableRefObject} from 'react';
 // eslint-disable-next-line no-restricted-imports
 import type {Animated} from 'react-native';
 
-type SidePanelModalProps = {
-    children: ReactNode;
+type HelpProps = {
     shouldHideSidePanel: boolean;
-    sidePanelTranslateX: RefObject<Animated.Value>;
+    sidePanelTranslateX: MutableRefObject<Animated.Value>;
     shouldHideSidePanelBackdrop: boolean;
     closeSidePanel: (shouldUpdateNarrow?: boolean) => void;
 };
 
-export default SidePanelModalProps;
+export default HelpProps;

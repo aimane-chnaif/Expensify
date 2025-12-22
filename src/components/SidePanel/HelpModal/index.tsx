@@ -1,14 +1,14 @@
 import {isRHPVisibleSelector} from '@selectors/Modal';
-import React, {useContext, useEffect} from 'react';
+import React, {useEffect, useMemo} from 'react';
 // eslint-disable-next-line no-restricted-imports
 import {Animated, View} from 'react-native';
-// @ts-expect-error This is a workaround to display SidePanel on top of everything,
+// @ts-expect-error This is a workaround to display HelpPane on top of everything,
 // Modal from react-native can't be used here, as it would block interactions with the rest of the app
 import ModalPortal from 'react-native-web/dist/exports/Modal/ModalPortal';
 import ColorSchemeWrapper from '@components/ColorSchemeWrapper';
 import FocusTrapForModal from '@components/FocusTrap/FocusTrapForModal';
-import SidePanelOverlay from '@components/SidePanel/SidePanelOverlay';
-import {WideRHPContext} from '@components/WideRHPContextProvider';
+import HelpContent from '@components/SidePanel/HelpComponents/HelpContent';
+import HelpOverlay from '@components/SidePanel/HelpComponents/HelpOverlay';
 import useKeyboardShortcut from '@hooks/useKeyboardShortcut';
 import useOnyx from '@hooks/useOnyx';
 import useResponsiveLayout from '@hooks/useResponsiveLayout';
@@ -17,18 +17,15 @@ import useThemeStyles from '@hooks/useThemeStyles';
 import ComposerFocusManager from '@libs/ComposerFocusManager';
 import CONST from '@src/CONST';
 import ONYXKEYS from '@src/ONYXKEYS';
-import type SidePanelModalProps from './types';
+import type HelpProps from './types';
 
-function SidePanelModal({children, sidePanelTranslateX, closeSidePanel, shouldHideSidePanelBackdrop}: SidePanelModalProps) {
+function Help({sidePanelTranslateX, closeSidePanel, shouldHideSidePanelBackdrop}: HelpProps) {
     const styles = useThemeStyles();
     const {isExtraLargeScreenWidth, shouldUseNarrowLayout} = useResponsiveLayout();
     const {paddingTop, paddingBottom} = useSafeAreaPaddings();
 
     const [isRHPVisible = false] = useOnyx(ONYXKEYS.MODAL, {selector: isRHPVisibleSelector, canBeMissing: true});
-    const uniqueModalId = ComposerFocusManager.getId();
-
-    const {wideRHPRouteKeys, isWideRHPFocused} = useContext(WideRHPContext);
-    const isWideRHPVisible = !!wideRHPRouteKeys.length;
+    const uniqueModalId = useMemo(() => ComposerFocusManager.getId(), []);
 
     const onCloseSidePanelOnSmallScreens = () => {
         if (isExtraLargeScreenWidth) {
@@ -63,9 +60,9 @@ function SidePanelModal({children, sidePanelTranslateX, closeSidePanel, shouldHi
                 <View style={styles.sidePanelContainer}>
                     <View>
                         {!shouldHideSidePanelBackdrop && (
-                            <SidePanelOverlay
+                            <HelpOverlay
                                 onBackdropPress={closeSidePanel}
-                                shouldBeVisible={isWideRHPVisible ? isWideRHPFocused : !isRHPVisible}
+                                isRHPVisible={isRHPVisible}
                             />
                         )}
                     </View>
@@ -78,7 +75,7 @@ function SidePanelModal({children, sidePanelTranslateX, closeSidePanel, shouldHi
                                 {transform: [{translateX: sidePanelTranslateX.current}], paddingTop, paddingBottom},
                             ]}
                         >
-                            {children}
+                            <HelpContent closeSidePanel={closeSidePanel} />
                         </Animated.View>
                     </ColorSchemeWrapper>
                 </View>
@@ -87,4 +84,4 @@ function SidePanelModal({children, sidePanelTranslateX, closeSidePanel, shouldHi
     );
 }
 
-export default SidePanelModal;
+export default Help;

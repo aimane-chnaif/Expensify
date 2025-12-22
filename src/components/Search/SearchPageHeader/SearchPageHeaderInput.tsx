@@ -18,7 +18,7 @@ import type {SearchQueryJSON, SearchQueryString} from '@components/Search/types'
 import type {SearchQueryItem} from '@components/SelectionListWithSections/Search/SearchQueryListItem';
 import {isSearchQueryItem} from '@components/SelectionListWithSections/Search/SearchQueryListItem';
 import type {SelectionListHandle} from '@components/SelectionListWithSections/types';
-import SidePanelButton from '@components/SidePanel/SidePanelButton';
+import HelpButton from '@components/SidePanel/HelpComponents/HelpButton';
 import {useMemoizedLazyExpensifyIcons} from '@hooks/useLazyAsset';
 import useOnyx from '@hooks/useOnyx';
 import useResponsiveLayout from '@hooks/useResponsiveLayout';
@@ -479,7 +479,7 @@ function SearchPageHeaderInput({queryJSON, searchRouterListVisible, hideSearchRo
                     )}
                 </View>
             </View>
-            <SidePanelButton style={styles.mt1Half} />
+            <HelpButton style={[styles.mt1Half]} />
         </View>
     );
 }

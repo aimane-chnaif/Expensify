@@ -1,5 +1,4 @@
-import React, {useEffect, useState} from 'react';
-import {Dimensions} from 'react-native';
+import React, {useState} from 'react';
 import FocusTrapForModal from '@components/FocusTrap/FocusTrapForModal';
 import Modal from '@components/Modal';
 import ScreenWrapperContainer from '@components/ScreenWrapper/ScreenWrapperContainer';
@@ -19,18 +18,6 @@ function SearchRouterModal() {
 
     // On mWeb Safari, the input caret stuck for a moment while the modal is animating. So, we hide the caret until the animation is done.
     const [shouldHideInputCaret, setShouldHideInputCaret] = useState(isMobileWebIOS);
-
-    useEffect(() => {
-        if (!isSearchRouterDisplayed || shouldUseNarrowLayout) {
-            return;
-        }
-
-        const subscription = Dimensions.addEventListener('change', closeSearchRouter);
-
-        return () => {
-            subscription.remove();
-        };
-    }, [isSearchRouterDisplayed, closeSearchRouter, shouldUseNarrowLayout]);
 
     const modalType = shouldUseNarrowLayout ? CONST.MODAL.MODAL_TYPE.CENTERED_SWIPEABLE_TO_RIGHT : CONST.MODAL.MODAL_TYPE.POPOVER;
     return (

@@ -1,9 +1,10 @@
 import React from 'react';
 import Modal from '@components/Modal';
+import HelpContent from '@components/SidePanel/HelpComponents/HelpContent';
 import CONST from '@src/CONST';
-import type SidePanelModalProps from './types';
+import type HelpProps from './types';
 
-function SidePanelModal({shouldHideSidePanel, closeSidePanel, children}: SidePanelModalProps) {
+function Help({shouldHideSidePanel, closeSidePanel}: HelpProps) {
     return (
         <Modal
             onClose={() => closeSidePanel()}
@@ -12,9 +13,9 @@ function SidePanelModal({shouldHideSidePanel, closeSidePanel, children}: SidePan
             shouldHandleNavigationBack
             swipeDirection={CONST.SWIPE_DIRECTION.RIGHT}
         >
-            {children}
+            <HelpContent closeSidePanel={closeSidePanel} />
         </Modal>
     );
 }
 
-export default SidePanelModal;
+export default Help;

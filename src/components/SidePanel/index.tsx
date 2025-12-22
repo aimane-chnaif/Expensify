@@ -1,11 +1,9 @@
 import React from 'react';
 import useSidePanel from '@hooks/useSidePanel';
-import type {ExtraContentProps} from '@libs/Navigation/PlatformStackNavigation/types';
-import Concierge from './Concierge';
-import SidePanelModal from './SidePanelModal';
+import Help from './HelpModal';
 import useSyncSidePanelWithHistory from './useSyncSidePanelWithHistory';
 
-function SidePanel({navigation}: Pick<ExtraContentProps, 'navigation'>) {
+function SidePanel() {
     const {sidePanelNVP, isSidePanelTransitionEnded, shouldHideSidePanel, sidePanelTranslateX, shouldHideSidePanelBackdrop, closeSidePanel} = useSidePanel();
 
     // Hide side panel once animation ends
@@ -24,14 +22,12 @@ function SidePanel({navigation}: Pick<ExtraContentProps, 'navigation'>) {
     }
 
     return (
-        <SidePanelModal
+        <Help
             shouldHideSidePanel={shouldHideSidePanel}
             sidePanelTranslateX={sidePanelTranslateX}
             closeSidePanel={closeSidePanel}
             shouldHideSidePanelBackdrop={shouldHideSidePanelBackdrop}
-        >
-            <Concierge navigation={navigation} />
-        </SidePanelModal>
+        />
     );
 }
 

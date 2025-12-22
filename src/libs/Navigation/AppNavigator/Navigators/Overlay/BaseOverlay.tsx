@@ -17,10 +17,10 @@ type BaseOverlayProps = {
     progress?: OverlayStylesParams;
 
     /* Overlay position from the left edge of the container */
-    positionLeftValue?: number | Animated.Value | Animated.AnimatedAddition<number>;
+    positionLeftValue?: number | Animated.Value;
 
     /* Overlay position from the right edge of the container */
-    positionRightValue?: number | Animated.Value | Animated.AnimatedAddition<number>;
+    positionRightValue?: number | Animated.Value;
 };
 
 // The default value of positionLeftValue is equal to -2 * variables.sideBarWidth, because we need to stretch the overlay to cover the sidebar and the translate animation distance.

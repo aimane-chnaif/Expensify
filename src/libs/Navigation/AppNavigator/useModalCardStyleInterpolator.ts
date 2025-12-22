@@ -22,7 +22,7 @@ type ModalCardStyleInterpolator = (props: ModalCardStyleInterpolatorProps) => St
 const useModalCardStyleInterpolator = (): ModalCardStyleInterpolator => {
     const {shouldUseNarrowLayout, onboardingIsMediumOrLargerScreenWidth} = useResponsiveLayout();
     const StyleUtils = useStyleUtils();
-    const {sidePanelOffset, sidePanelNVP, isSidePanelTransitionEnded} = useSidePanel();
+    const {sidePanelOffset} = useSidePanel();
 
     const modalCardStyleInterpolator: ModalCardStyleInterpolator = ({
         props: {
@@ -57,12 +57,7 @@ const useModalCardStyleInterpolator = (): ModalCardStyleInterpolator => {
 
         const cardStyle = StyleUtils.getCardStyles(screen.width);
 
-        // Screen should animate if:
-        // 1. The animation is enabled
-        // 2. The modal is not a full screen on wide layout
-        // 3. The side panel transition is in progress on narrow layout
-        const shouldAnimate = animationEnabled && (!isFullScreenModal || shouldUseNarrowLayout) && (isSidePanelTransitionEnded || !!sidePanelNVP?.openNarrowScreen || !shouldUseNarrowLayout);
-        if (shouldAnimate) {
+        if (animationEnabled && (!isFullScreenModal || shouldUseNarrowLayout)) {
             cardStyle.transform = [{translateX}];
         }
 
